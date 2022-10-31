@@ -2,16 +2,16 @@
 
 ### Code Name - ClimateChange1
 
-##### Authors:
+#### Authors:
 Calvin Standaert - calvinst@uw.edu, Ian Paul - ianpaul@uw.edu, Zahra Firoz- zahraf@uw.edu, Thu La- tkl22@uw.edu
 
-##### Affiliation:
+#### Affiliation:
 INFO-201: Technical Foundations of Informatics - The Information School - University of Washington
-##### Date
+#### Date
 Autumn 2022
 ## Abstract
 
-##### Keywords:
+#### Keywords:
 Climate Change, Human Health, Natural Disasters, Human Activity  
 ## Introduction
 Our group has come together to present harsh data on the impacts that climate change has had and will have in the future on the world as we know it. The leading cause of climate change is human based activities that result in harm to the environment. Some examples of this are the burning of fossil fuels, deforestation, and more. We do so with the hopes that this data and the work that derives from it will cause a deeper understanding of why climate change is such an important topic, offer a basic education on what we can expect if we don’t make necessary changes, and work to knock down some of the false information that circulates the news cycle about climate change.
@@ -32,11 +32,11 @@ Our datasets can be of beneficial use to the public offering the facts and effec
 
 Answering this question is our overall goal. As a group that is focusing on climate change and understanding its impacts, human health is a top priority. After all, being selfish is in human nature, when we explain what we stand to lose in terms of health and well-being we hope this topic will resonate that much more with the audience.
 
-##### 2. Which groups are most affected by the health risks posed by climate change?
+#### 2. Which groups are most affected by the health risks posed by climate change?
 
 A large issue that is often overlooked by people is the fact that climate change's most catastrophic effects impact the most vulnerable populations in the world, most of all less developed countries. It is often the countries that contribute the least to climate change and emit the least fossil fuels that are dealing with its worst impacts, such as health risks.
 
-##### 3. How have the governments of those most affected by climate change health risks responded?
+#### 3. How have the governments of those most affected by climate change health risks responded?
 
 Government reaction and addressing of climate change is something we must take into account. Money is something that everyone understands, and in regard to climate change, this is no different. Preventative and conservative measures rely on funding, from building ocean walls to help with rising sea levels, to working on cars and factories that release fewer emissions, it is important to note how governments are choosing to tackle climate change and the health risks posed.
 
