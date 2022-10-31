@@ -1,7 +1,7 @@
 # Final Project Repository
 **INFO-201: _Foundational Skills For Data Science_ (Autumn 2022)**
 
-*P01: Project Proposal*: [The Human-centered Consequences of Climate Change.
+*P01: Project Proposal*: [The Human-Centered Consequences of Climate Change.
 ](./docs/p01-proposal.md) 
 
 
