@@ -10,6 +10,7 @@ INFO-201: Technical Foundations of Informatics - The Information School - Univer
 #### Date
 Autumn 2022
 ## Abstract
+The main question we will be addressing is: ‘_how does climate change affect human health and activity_’. This is an important topic to us because we will experience the effects of climate change more than any generation. We are planning to answer this question by collecting data on climate change and using our skills with R to find meaningful trends.
 
 #### Keywords:
 Climate Change, Human Health, Natural Disasters, Human Activity  
