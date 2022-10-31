@@ -1,4 +1,4 @@
-# The Human-centered Consequences of Climate Change.
+# The Human-Centered Consequences of Climate Change.
 
 ### Code Name - ClimateChange1
 
