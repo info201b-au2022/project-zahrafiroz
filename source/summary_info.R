@@ -61,16 +61,16 @@ summary_info$most_vulnerable_hazards <- climate_hazards %>%
 top_disasters <- disaster_freq %>%
   filter(Indicator == "Climate related disasters frequency, Number of Disasters: TOTAL") %>%
   group_by(Country) %>%
-  mutate(disaster_sum = sum(across(starts_with("F")), na.rm = T)) %>%
+  mutate(disaster_sum = sum(across(starts_with("F")), na.rm = TRUE)) %>%
   select(Country, disaster_sum) %>%
   as.data.frame()
 
 summary_info$most_disasters_freq <- top_disasters %>%
-  filter(disaster_sum == max(disaster_sum, na.rm = T)) %>%
+  filter(disaster_sum == max(disaster_sum, na.rm = TRUE)) %>%
   pull(disaster_sum)
 
 summary_info$most_disasters_nation <- top_disasters %>%
-  filter(disaster_sum == max(disaster_sum, na.rm = T)) %>%
+  filter(disaster_sum == max(disaster_sum, na.rm = TRUE)) %>%
   pull(Country)
 
 # Find the average gdp spent on environmental protection by the ten nations
@@ -79,7 +79,7 @@ summary_info$most_disasters_nation <- top_disasters %>%
 gdp <- gov_expend %>%
   filter(Unit == "Percent of GDP") %>%
   group_by(Country) %>%
-  summarise(sum = sum(across(starts_with("F")), na.rm = T)) %>%
+  summarise(sum = sum(across(starts_with("F")), na.rm = TRUE)) %>%
   mutate(avg_gdp = sum / ncol(select(gov_expend, starts_with("F")))) %>%
   select(-sum)
 
@@ -87,6 +87,6 @@ summary_info$avg_gdp_ten <- left_join(gdp, top_disasters, by = "Country") %>%
   arrange(-disaster_sum) %>%
   head(10) %>%
   pull(avg_gdp) %>%
-  mean() %>%
+  mean(na.rm = TRUE) %>%
   round(2)
 
