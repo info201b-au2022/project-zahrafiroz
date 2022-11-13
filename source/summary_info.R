@@ -1,5 +1,4 @@
 library(tidyverse)
-library(dplyr)
 
 climate_hazards <- read.csv("../data/2022_Cities_Climate_Hazards.csv", stringsAsFactors = FALSE)
 
@@ -74,7 +73,7 @@ summary_info$most_disasters_nation <- top_disasters %>%
   pull(Country)
 
 # Find the average gdp spent on environmental protection by the ten nations
-# with the most climate-related disasters.
+# with the most climate-related disasters (of those included in the data file).
 
 gdp <- gov_expend %>%
   filter(Unit == "Percent of GDP") %>%
