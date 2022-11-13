@@ -1,15 +1,18 @@
 library("tidyverse")
 library("countrycode")
 
-climate_hazards <- read.csv("../data/2022_Cities_Climate_Hazards.csv",
+climate_hazards <- read.csv(
+  "../data/2022_Cities_Climate_Hazards.csv",
   stringsAsFactors = FALSE
 )
 
-climate_health <- read.csv("../data/2021_Cities_Climate_Change_Impacts_on_Health_and_Health_Systems.csv",
+climate_health <- read.csv(
+  "../data/2021_Cities_Climate_Change_Impacts_on_Health_and_Health_Systems.csv",
   stringsAsFactors = FALSE
 )
 
-disaster_freq <- read.csv("../data/Climate-related_Disasters_Frequency.csv",
+disaster_freq <- read.csv(
+  "../data/Climate-related_Disasters_Frequency.csv",
   stringsAsFactors = FALSE
 )
 
@@ -34,8 +37,14 @@ top_hazard <- climate_hazards %>%
 
 # Find the top climate-related health issue in nations.
 health_issues <- climate_health %>%
-  select(Country, Identify.the.climate.related.health.issues.faced.by.your.city) %>%
-  rename(Health_issues = Identify.the.climate.related.health.issues.faced.by.your.city) %>%
+  select(
+    Country,
+    Identify.the.climate.related.health.issues.faced.by.your.city
+  ) %>%
+  rename(
+    Health_issues =
+      Identify.the.climate.related.health.issues.faced.by.your.city
+  ) %>%
   mutate(Health_issues = strsplit(as.character(Health_issues), ";")) %>%
   unnest(Health_issues) %>%
   mutate(Health_issues = str_trim(Health_issues, "left")) %>%
