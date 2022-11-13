@@ -1,0 +1,55 @@
+---
+title: "The Human Centered Consequences of Climate Change"
+author: "Calvin, Zahra, Ian, Thu"
+date: "2022-11-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Dynamic Paragraph
+In order to get a deep understanding of the impact climate change has had on the human species we drew five distinct values from our data sets. These five values will point out the most frequent climate related hazard and the most frequent climate related health issue both with a direct affiliation to human health. Then we will note the population most vulnerable to climate related health issues and the population most frequently vulnerable to climate hazards, these values inform us on who is dealing with the harshest outcomes of climate change. And lastly, we draw out the nation with the highest number of climate related disasters to pin point the nation most at risk as shown by data.  
+
+### Most frequent climate related hazards
+```{r} summary_info$most_frequent_hazard, echo = TRUE, message = TRUE
+```
+By using the code specified in our R script we pull one variable into our summary_info page. The data shows that the climate related hazard that occurs most commonly, that we derived using the max() function, is **'Extreme heat'**. 
+
+### Most frequent climate related health issue
+```{r} summary_info$most_frequent_health_issue, echo = TRUE, message = TRUE
+```
+We then moved onto deriving from all of our data, the climate related health issue that was occuring the highest number of times. We returned the answer **'Heat-related illness'** which directly correlates to our previous value, where we found that the most frequent climate related hazard was extreme heat. 
+
+### Population reporting most climate related health issues
+```{r} summary_info$most_vulnerable_health, echo = TRUE, message = TRUE
+```
+When wanting to understand the impacts of climate change on humans it is important that we understand who is most vulnerable within the population. The return value, as we predicted was the **'Elderly'** portion of citizens. 
+
+### Population most frequently vulnerable to climate hazards
+```{r} summary_info$most_vulnerable_hazards, echo = TRUE, message = TRUE
+```
+This question was also an important for us to answer in order to better understand who is most at risk for climate hazards. The answer we pulled from this set of code was also sadly predictable. It was not to our surprise that **'Low-income households'** are vulnerable to climate based hazards and just further reiterates how harmful climate change is to people alredy struggling. 
+
+### Nation with the highest number of climate related disasters
+```{r} summary_info$most_disasters_nation, echo = TRUE, message = TRUE
+```
+The nation that pulled with the largest number of climate related disasters returned as **'United States'**. This calue came to us as a bit of a surprise as The United States is one of the most powerful countries in the world and we often do not consider them when we think of disasters. However, one must consider the idea of money, power, and resources, when considering why The United States reported so many climate related disasters when other countries could have suffered more. 
+
+
+### Table: 
+This table gathers some of the most important features of the data files we are using in our project. Taking a look at the data table, we can understand how parts of our data are structured, along with several important observations. One observation is that out of the nations listed in the dataset, the United States has experienced the highest number of climate-related disasters at 889 disasters. Another important observation that can be gathered from the table is the main climate-related health issue impacting each nation, for example, the main climate-related health issue impacting the United States is heat-related illnesses. Finally, from the table, we can also gather the main climate-related hazards that are impacting each nation, with the main hazard for the United States being extreme heat.
+
+### Graph 1: 
+```{r plot_example, echo = FALSE}
+```
+
+### Graph 2: 
+```{r plot_example, echo = FALSE}
+```
+
+### Graph 3: 
+```{r plot_example, echo = FALSE}
+```
+This chart aims to help answer our third research question: "how have the governments of the groups most affected by climate change-related health issues reacted”. This chart answers this question by plotting each nation in the data according to the number of climate-related disasters that have impacted the country, and the average percent of each nation that is dedicated to environmental protection programs. What we can see from the chart is that the fact that a country has experienced more climate-related disasters does not seem to have much of an impact on the proportion of a nation’s GDP that is dedicated to environmental protection programs. This is best shown by how the Netherlands has experienced 36 disasters and spends around 3% of its GDP on environmental protection, while China has experienced 733 disasters and spends around .4% of its GDP on environmental protection. 
