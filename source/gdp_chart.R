@@ -48,13 +48,16 @@ gdp_chart <- plot_ly(
   )
 ) %>%
   layout(
-    title = "Nation GDP proportion spent on environmental protection vs. count of natural disasters that have impacted nation.",
+    title = "Proportion of nation's GDP spent on environmental protection vs. 
+    count of climate-related disasters occuring in nation",
     xaxis = list(
-      title = "Count of climate-related disasters that have affected nation (1980-2018)",
+      title = "Count of climate-related disasters occuring in nation 
+    (1980-2018)",
       ticksuffix = " Disasters"
     ),
     yaxis = list(
-      title = "Mean proportion of nation's GDP spent on environmental protection (1995-2021)",
+      title = "Mean proportion of nation's GDP spent on environmental protection
+    (1995-2021)",
       ticksuffix = "%"
     )
   )
