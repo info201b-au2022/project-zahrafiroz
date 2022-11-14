@@ -4,52 +4,211 @@ author: "Calvin, Zahra, Ian, Thu"
 date: "2022-11-13"
 output: html_document
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## Dynamic Paragraph
 In order to get a deep understanding of the impact climate change has had on the human species we drew five distinct values from our data sets. These five values will point out the most frequent climate related hazard and the most frequent climate related health issue both with a direct affiliation to human health. Then we will note the population most vulnerable to climate related health issues and the population most frequently vulnerable to climate hazards, these values inform us on who is dealing with the harshest outcomes of climate change. And lastly, we draw out the nation with the highest number of climate related disasters to pin point the nation most at risk as shown by data.  
 
-### Most frequent climate related hazards
-```{r} summary_info$most_frequent_hazard, echo = TRUE, message = TRUE
+```{r echo=FALSE, message=FALSE}
+library(tidyverse)
+library(knitr)
+library(countrycode)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+climate_hazards <- read.csv("https://raw.githubusercontent.com/info201b-au2022/project-zahrafiroz/main/data/2022_Cities_Climate_Hazards.csv", stringsAsFactors = FALSE)
+
+climate_health <- read.csv("https://raw.githubusercontent.com/info201b-au2022/project-zahrafiroz/main/data/2021_Cities_Climate_Change_Impacts_on_Health_and_Health_Systems.csv", stringsAsFactors = F)
+
+disaster_freq <- read.csv("https://raw.githubusercontent.com/info201b-au2022/project-zahrafiroz/main/data/Climate-related_Disasters_Frequency.csv", stringsAsFactors = F)
+
+gov_expend <- read.csv("https://raw.githubusercontent.com/info201b-au2022/project-zahrafiroz/main/data/Environmental_Protection_Expenditures.csv", stringsAsFactors = F)
+
+summary_info <- list()
+# Find the most frequent climate-related hazard.
+summary_info$most_frequent_hazard <- climate_hazards %>%
+  mutate(Climate.related.hazards = strsplit(as.character(Climate.related.hazards), ";")) %>%
+  unnest(Climate.related.hazards) %>%
+  mutate(Climate.related.hazards = str_trim(Climate.related.hazards, "left")) %>%
+  count(Climate.related.hazards) %>%
+  filter(n == max(n)) %>%
+  pull(Climate.related.hazards)
+
+# Find the most frequent climate-related health issue.
+summary_info$most_frequent_health_issue <- climate_health %>%
+  rename(Health_issue = Identify.the.climate.related.health.issues.faced.by.your.city) %>%
+  select(Country, Health_issue) %>%
+  mutate(Health_issue = strsplit(as.character(Health_issue), ";")) %>%
+  unnest(Health_issue) %>%
+  mutate(Health_issue = str_trim(Health_issue, "left")) %>%
+  count(Health_issue) %>%
+  filter(Health_issue != "Question not applicable") %>%
+  filter(n == max(n)) %>%
+  pull(Health_issue)
+
+# Find the most population most frequently vulnerable from climate health issues
+summary_info$most_vulnerable_health <- climate_health %>%
+  rename(vulnerable_pop = Please.identify.which.vulnerable.populations.are.affected.by.these.climate.related.impacts) %>%
+  select(Country, vulnerable_pop) %>%
+  mutate(vulnerable_pop = strsplit(as.character(vulnerable_pop), ";")) %>%
+  unnest(vulnerable_pop) %>%
+  mutate(vulnerable_pop = str_trim(vulnerable_pop, "left")) %>%
+  count(vulnerable_pop) %>%
+  filter(vulnerable_pop != "Question not applicable") %>%
+  filter(n == max(n)) %>%
+  pull(vulnerable_pop)
+
+# Find the population most frequently vulnerable from climate hazards.
+summary_info$most_vulnerable_hazards <- climate_hazards %>%
+  select(Country, Vulnerable.population.groups.most.exposed) %>%
+  rename(vulnerable_pop = Vulnerable.population.groups.most.exposed) %>%
+  mutate(vulnerable_pop = strsplit(as.character(vulnerable_pop), ";")) %>%
+  unnest(vulnerable_pop) %>%
+  mutate(vulnerable_pop = str_trim(vulnerable_pop, "left")) %>%
+  count(vulnerable_pop) %>%
+  filter(vulnerable_pop != "Question not applicable") %>%
+  filter(n == max(n)) %>%
+  pull(vulnerable_pop)
+
+# Find the nation that has had the most climate-related disasters and the
+# amount of disasters that affected that nation.
+top_disasters <- disaster_freq %>%
+  filter(Indicator == "Climate related disasters frequency, Number of Disasters: TOTAL") %>%
+  group_by(Country) %>%
+  mutate(disaster_sum = sum(across(starts_with("F")), na.rm = TRUE)) %>%
+  select(Country, disaster_sum) %>%
+  as.data.frame()
+
+summary_info$most_disasters_freq <- top_disasters %>%
+  filter(disaster_sum == max(disaster_sum, na.rm = TRUE)) %>%
+  pull(disaster_sum)
+
+summary_info$most_disasters_nation <- top_disasters %>%
+  filter(disaster_sum == max(disaster_sum, na.rm = TRUE)) %>%
+  pull(Country)
+
+# Find the average gdp spent on environmental protection by the ten nations
+# with the most climate-related disasters (of those included in the data file).
+
+gdp <- gov_expend %>%
+  filter(Unit == "Percent of GDP") %>%
+  group_by(Country) %>%
+  summarise(sum = sum(across(starts_with("F")), na.rm = TRUE)) %>%
+  mutate(avg_gdp = sum / ncol(select(gov_expend, starts_with("F")))) %>%
+  select(-sum)
+
+summary_info$avg_gdp_ten <- left_join(gdp, top_disasters, by = "Country") %>%
+  arrange(-disaster_sum) %>%
+  head(10) %>%
+  pull(avg_gdp) %>%
+  mean(na.rm = TRUE) %>%
+  round(2)
+# Find the count of climate-related disasters that have affected nations.
+disaster_freq_nations <- disaster_freq %>%
+  filter(Indicator == "Climate related disasters frequency, Number of Disasters: TOTAL") %>%
+  group_by(ISO3) %>%
+  mutate(total_disasters = sum(across(starts_with("F")), na.rm = TRUE)) %>%
+  select(total_disasters, ISO3)
+
+# Find the top climate-related hazard in nations.
+top_hazard <- climate_hazards %>%
+  group_by(Country) %>%
+  count(Climate.related.hazards, sort = TRUE) %>%
+  filter(n == max(n)) %>%
+  filter(Climate.related.hazards != "") %>%
+  summarize(top_hazard = paste(Climate.related.hazards, collapse = ", ")) %>%
+  mutate(ISO3 = countrycode(Country,
+                            origin = "country.name",
+                            destination = "iso3c"
+  ))
+
+# Find the top climate-related health issue in nations.
+health_issues <- climate_health %>%
+  select(
+    Country,
+    Identify.the.climate.related.health.issues.faced.by.your.city
+  ) %>%
+  rename(
+    Health_issues =
+      Identify.the.climate.related.health.issues.faced.by.your.city
+  ) %>%
+  mutate(Health_issues = strsplit(as.character(Health_issues), ";")) %>%
+  unnest(Health_issues) %>%
+  mutate(Health_issues = str_trim(Health_issues, "left")) %>%
+  group_by(Country) %>%
+  count(Health_issues) %>%
+  filter(Health_issues != "Question not applicable") %>%
+  filter(n == max(n)) %>%
+  summarize(top_health_issue = paste(Health_issues, collapse = ", ")) %>%
+  mutate(ISO3 = countrycode(Country,
+                            origin = "country.name",
+                            destination = "iso3c"
+  ))
+
+# Join data and format for presentation.
+data_table <- inner_join(disaster_freq_nations, top_hazard, by = "ISO3") %>%
+  inner_join(health_issues, by = "ISO3") %>%
+  mutate(Country = countrycode(ISO3,
+                               origin = "iso3c",
+                               destination = "country.name"
+  )) %>%
+  group_by(Country) %>%
+  select(Country, total_disasters, top_health_issue, top_hazard) %>%
+  filter(Country != "") %>%
+  arrange(-total_disasters) %>%
+  head(10) %>%
+  rename(
+    Number_of_climate_related_disasters_recorded_in_nation = total_disasters,
+    Main_climate_related_health_issue_in_nation = top_health_issue,
+    Main_climate_related_environmental_hazard_in_nation = top_hazard
+  )
+```
+
+##### Most frequent climate related hazards
+```{r echo=TRUE, message=FALSE}
+summary_info$most_frequent_hazard
 ```
 By using the code specified in our R script we pull one variable into our summary_info page. The data shows that the climate related hazard that occurs most commonly, that we derived using the max() function, is **'Extreme heat'**. 
 
-### Most frequent climate related health issue
-```{r} summary_info$most_frequent_health_issue, echo = TRUE, message = TRUE
+##### Most frequent climate related health issue
+```{r, echo = TRUE, message = TRUE}
+summary_info$most_frequent_health_issue
 ```
 We then moved onto deriving from all of our data, the climate related health issue that was occuring the highest number of times. We returned the answer **'Heat-related illness'** which directly correlates to our previous value, where we found that the most frequent climate related hazard was extreme heat. 
 
-### Population reporting most climate related health issues
-```{r} summary_info$most_vulnerable_health, echo = TRUE, message = TRUE
+##### Population reporting most climate related health issues
+```{r, echo = TRUE, message = TRUE}
+summary_info$most_vulnerable_health
 ```
 When wanting to understand the impacts of climate change on humans it is important that we understand who is most vulnerable within the population. The return value, as we predicted was the **'Elderly'** portion of citizens. 
 
-### Population most frequently vulnerable to climate hazards
-```{r} summary_info$most_vulnerable_hazards, echo = TRUE, message = TRUE
+##### Population most frequently vulnerable to climate hazards
+```{r, echo = TRUE, message = TRUE} 
+summary_info$most_vulnerable_hazards
 ```
 This question was also an important for us to answer in order to better understand who is most at risk for climate hazards. The answer we pulled from this set of code was also sadly predictable. It was not to our surprise that **'Low-income households'** are vulnerable to climate based hazards and just further reiterates how harmful climate change is to people alredy struggling. 
 
-### Nation with the highest number of climate related disasters
-```{r} summary_info$most_disasters_nation, echo = TRUE, message = TRUE
+##### Nation with the highest number of climate related disasters
+```{r, echo = TRUE, message = TRUE} 
+summary_info$most_disasters_nation
 ```
 The nation that pulled with the largest number of climate related disasters returned as **'United States'**. This calue came to us as a bit of a surprise as The United States is one of the most powerful countries in the world and we often do not consider them when we think of disasters. However, one must consider the idea of money, power, and resources, when considering why The United States reported so many climate related disasters when other countries could have suffered more. 
 
 
-### Table: 
+## Table: 
+```{r, echo = TRUE, message = TRUE} 
+kable(data_table)
+```
 This table gathers some of the most important features of the data files we are using in our project. Taking a look at the data table, we can understand how parts of our data are structured, along with several important observations. One observation is that out of the nations listed in the dataset, the United States has experienced the highest number of climate-related disasters at 889 disasters. Another important observation that can be gathered from the table is the main climate-related health issue impacting each nation, for example, the main climate-related health issue impacting the United States is heat-related illnesses. Finally, from the table, we can also gather the main climate-related hazards that are impacting each nation, with the main hazard for the United States being extreme heat.
 
-### Graph 1: 
-```{r plot_example, echo = FALSE}
+#### Graph 1: How has human health been impacted by climate change?
+```{r} INSTERT, echo = TRUE, message = TRUE
 ```
+We used the csv “2022 Cities Climate Hazards” to find what type of climate change related hazards occurred throughout the world. We shortened the table to have two columns about the types of hazards and frequency of occurrences. The number of rows about types of hazards were narrowed down to show the top 20 issues occurred in 2022. Using this data, we created a bar chart to show the order of hazards by the descending number of occurrences. We were able to find that the five most common hazards across the world are extreme heat, heavy rainfall, drought, urban flooding, and river flooding. 
 
-### Graph 2: 
-```{r plot_example, echo = FALSE}
+#### Graph 2: Which groups have been impacted by climate change most?
+```{r} INSERT, echo = TRUE, message = TRUE
 ```
+For chart two we used the Climate Related Disasters Frequency csv to find out which country had the most trouble due to climate change. Using information on this csv between 1980 and 2018, we could count the number of disasters each country has experienced since then. From there we created a chart that compared the overall disasters for the top ten most affected countries around the world. Surprisingly, we discovered that the United States has experienced the most climate related disasters since the 80s, with China and India trailing behind. This chart allowed us to gain a better perspective on the effects of climate change and climate related disasters around the world. 
 
-### Graph 3: 
-```{r plot_example, echo = FALSE}
+#### Graph 3: How have the governments of the groups most affected by climate change-related health issues reacted?
+```{r, echo = TRUE, message = TRUE} gpd_chart
 ```
-This chart aims to help answer our third research question: "how have the governments of the groups most affected by climate change-related health issues reacted”. This chart answers this question by plotting each nation in the data according to the number of climate-related disasters that have impacted the country, and the average percent of each nation that is dedicated to environmental protection programs. What we can see from the chart is that the fact that a country has experienced more climate-related disasters does not seem to have much of an impact on the proportion of a nation’s GDP that is dedicated to environmental protection programs. This is best shown by how the Netherlands has experienced 36 disasters and spends around 3% of its GDP on environmental protection, while China has experienced 733 disasters and spends around .4% of its GDP on environmental protection. 
+This chart aims to help answer our third research question: "how have the governments of the groups most affected by climate change-related health issues reacted”. This chart answers this question by plotting each nation in the data according to the number of climate-related disasters that have impacted the country, and the average percent of each nation that is dedicated to environmental protection programs. What we can see from the chart is that the fact that a country has experienced more climate-related disasters does not seem to have much of an impact on the proportion of a nation’s GDP that is dedicated to environmental protection programs. This is best shown by how the Netherlands has experienced 36 disasters and spends around 3% of its GDP on environmental protection, while China has experienced 733 disasters and spends around .4% of its GDP on environmental protection.

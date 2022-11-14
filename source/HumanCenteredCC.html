@@ -358,8 +358,6 @@ Change</h1>
 </div>
 
 
-<div id="dynamic-paragraph" class="section level2">
-<h2>Dynamic Paragraph</h2>
 <p>In order to get a deep understanding of the impact climate change has
 had on the human species we drew five distinct values from our data
 sets. These five values will point out the most frequent climate related
@@ -370,45 +368,50 @@ frequently vulnerable to climate hazards, these values inform us on who
 is dealing with the harshest outcomes of climate change. And lastly, we
 draw out the nation with the highest number of climate related disasters
 to pin point the nation most at risk as shown by data.</p>
-<div id="most-frequent-climate-related-hazards" class="section level3">
-<h3>Most frequent climate related hazards</h3>
-<p><code>{r} summary_info$most_frequent_hazard, echo = TRUE, message = TRUE</code>
-By using the code specified in our R script we pull one variable into
+<div id="most-frequent-climate-related-hazards" class="section level5">
+<h5>Most frequent climate related hazards</h5>
+<pre class="r"><code>summary_info$most_frequent_hazard</code></pre>
+<pre><code>## [1] &quot;Extreme heat&quot;</code></pre>
+<p>By using the code specified in our R script we pull one variable into
 our summary_info page. The data shows that the climate related hazard
 that occurs most commonly, that we derived using the max() function, is
 <strong>‘Extreme heat’</strong>.</p>
 </div>
-<div id="most-frequent-climate-related-health-issue" class="section level3">
-<h3>Most frequent climate related health issue</h3>
-<p><code>{r} summary_info$most_frequent_health_issue, echo = TRUE, message = TRUE</code>
-We then moved onto deriving from all of our data, the climate related
+<div id="most-frequent-climate-related-health-issue" class="section level5">
+<h5>Most frequent climate related health issue</h5>
+<pre class="r"><code>summary_info$most_frequent_health_issue</code></pre>
+<pre><code>## [1] &quot;Heat-related illnesses&quot;</code></pre>
+<p>We then moved onto deriving from all of our data, the climate related
 health issue that was occuring the highest number of times. We returned
 the answer <strong>‘Heat-related illness’</strong> which directly
 correlates to our previous value, where we found that the most frequent
 climate related hazard was extreme heat.</p>
 </div>
-<div id="population-reporting-most-climate-related-health-issues" class="section level3">
-<h3>Population reporting most climate related health issues</h3>
-<p><code>{r} summary_info$most_vulnerable_health, echo = TRUE, message = TRUE</code>
-When wanting to understand the impacts of climate change on humans it is
-important that we understand who is most vulnerable within the
+<div id="population-reporting-most-climate-related-health-issues" class="section level5">
+<h5>Population reporting most climate related health issues</h5>
+<pre class="r"><code>summary_info$most_vulnerable_health</code></pre>
+<pre><code>## [1] &quot;Elderly&quot;</code></pre>
+<p>When wanting to understand the impacts of climate change on humans it
+is important that we understand who is most vulnerable within the
 population. The return value, as we predicted was the
 <strong>‘Elderly’</strong> portion of citizens.</p>
 </div>
-<div id="population-most-frequently-vulnerable-to-climate-hazards" class="section level3">
-<h3>Population most frequently vulnerable to climate hazards</h3>
-<p><code>{r} summary_info$most_vulnerable_hazards, echo = TRUE, message = TRUE</code>
-This question was also an important for us to answer in order to better
-understand who is most at risk for climate hazards. The answer we pulled
-from this set of code was also sadly predictable. It was not to our
-surprise that <strong>‘Low-income households’</strong> are vulnerable to
-climate based hazards and just further reiterates how harmful climate
-change is to people alredy struggling.</p>
+<div id="population-most-frequently-vulnerable-to-climate-hazards" class="section level5">
+<h5>Population most frequently vulnerable to climate hazards</h5>
+<pre class="r"><code>summary_info$most_vulnerable_hazards</code></pre>
+<pre><code>## [1] &quot;Low-income households&quot;</code></pre>
+<p>This question was also an important for us to answer in order to
+better understand who is most at risk for climate hazards. The answer we
+pulled from this set of code was also sadly predictable. It was not to
+our surprise that <strong>‘Low-income households’</strong> are
+vulnerable to climate based hazards and just further reiterates how
+harmful climate change is to people alredy struggling.</p>
 </div>
-<div id="nation-with-the-highest-number-of-climate-related-disasters" class="section level3">
-<h3>Nation with the highest number of climate related disasters</h3>
-<p><code>{r} summary_info$most_disasters_nation, echo = TRUE, message = TRUE</code>
-The nation that pulled with the largest number of climate related
+<div id="nation-with-the-highest-number-of-climate-related-disasters" class="section level5">
+<h5>Nation with the highest number of climate related disasters</h5>
+<pre class="r"><code>summary_info$most_disasters_nation</code></pre>
+<pre><code>## [1] &quot;United States&quot;</code></pre>
+<p>The nation that pulled with the largest number of climate related
 disasters returned as <strong>‘United States’</strong>. This calue came
 to us as a bit of a surprise as The United States is one of the most
 powerful countries in the world and we often do not consider them when
@@ -417,8 +420,103 @@ power, and resources, when considering why The United States reported so
 many climate related disasters when other countries could have suffered
 more.</p>
 </div>
-<div id="table" class="section level3">
-<h3>Table:</h3>
+<div id="table" class="section level2">
+<h2>Table:</h2>
+<pre class="r"><code>kable(data_table)</code></pre>
+<table>
+<colgroup>
+<col width="1%" />
+<col width="7%" />
+<col width="81%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Country</th>
+<th align="right">Number_of_climate_related_disasters_recorded_in_nation</th>
+<th align="left">Main_climate_related_health_issue_in_nation</th>
+<th align="left">Main_climate_related_environmental_hazard_in_nation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">United States</td>
+<td align="right">889</td>
+<td align="left">Heat-related illnesses</td>
+<td align="left">Extreme heat</td>
+</tr>
+<tr class="even">
+<td align="left">India</td>
+<td align="right">520</td>
+<td align="left">Air-pollution related illnesses, Disruption to health
+service provision, Heat-related illnesses, Vector-borne infectious
+diseases (e.g. malaria, dengue, Lyme disease, tick-borne
+encephalitis)</td>
+<td align="left">Extreme heat</td>
+</tr>
+<tr class="odd">
+<td align="left">Philippines</td>
+<td align="right">471</td>
+<td align="left">Heat-related illnesses</td>
+<td align="left">Drought, Storm, Urban flooding</td>
+</tr>
+<tr class="even">
+<td align="left">Indonesia</td>
+<td align="right">321</td>
+<td align="left">Vector-borne infectious diseases (e.g. malaria, dengue,
+Lyme disease, tick-borne encephalitis)</td>
+<td align="left">Extreme wind</td>
+</tr>
+<tr class="odd">
+<td align="left">Vietnam</td>
+<td align="right">228</td>
+<td align="left">Direct physical injuries and deaths due to extreme
+weather events, Disruption of health-related services (e.g. roads,
+electricity, communications, emergency/ambulatory response,
+laboratories, pharmacies), Exacerbation of Non-Communicable Disease
+Symptoms (e.g. respiratory disease, cardiovascular disease, renal
+disease), Food &amp; Nutrition Security, Heat-related illnesses, Mental
+health impacts, Vector-borne infectious diseases (e.g. malaria, dengue,
+Lyme disease, tick-borne encephalitis), Water-borne and food-borne
+infectious diseases (e.g. diarrhoeal diseases and wound infections)</td>
+<td align="left">Mass movement, Storm</td>
+</tr>
+<tr class="even">
+<td align="left">Mexico</td>
+<td align="right">207</td>
+<td align="left">Vector-borne infectious diseases (e.g. malaria, dengue,
+Lyme disease, tick-borne encephalitis)</td>
+<td align="left">Drought</td>
+</tr>
+<tr class="odd">
+<td align="left">Australia</td>
+<td align="right">199</td>
+<td align="left">Mental health impacts</td>
+<td align="left">Extreme heat, Fire weather (risk of wildfires)</td>
+</tr>
+<tr class="even">
+<td align="left">Brazil</td>
+<td align="right">187</td>
+<td align="left">Vector-borne infectious diseases (e.g. malaria, dengue,
+Lyme disease, tick-borne encephalitis)</td>
+<td align="left">Drought</td>
+</tr>
+<tr class="odd">
+<td align="left">France</td>
+<td align="right">169</td>
+<td align="left">Air-pollution related illnesses</td>
+<td align="left">Extreme heat, Heavy precipitation</td>
+</tr>
+<tr class="even">
+<td align="left">Thailand</td>
+<td align="right">142</td>
+<td align="left">Vector-borne infectious diseases (e.g. malaria, dengue,
+Lyme disease, tick-borne encephalitis)</td>
+<td align="left">Drought, River flooding, Soil degradation/erosion,
+Urban flooding</td>
+</tr>
+</tbody>
+</table>
 <p>This table gathers some of the most important features of the data
 files we are using in our project. Taking a look at the data table, we
 can understand how parts of our data are structured, along with several
@@ -431,28 +529,51 @@ main climate-related health issue impacting the United States is
 heat-related illnesses. Finally, from the table, we can also gather the
 main climate-related hazards that are impacting each nation, with the
 main hazard for the United States being extreme heat.</p>
+<div id="graph-1-how-has-human-health-been-impacted-by-climate-change" class="section level4">
+<h4>Graph 1: How has human health been impacted by climate change?</h4>
+<p><code>{r} INSTERT, echo = TRUE, message = TRUE</code> We used the csv
+“2022 Cities Climate Hazards” to find what type of climate change
+related hazards occurred throughout the world. We shortened the table to
+have two columns about the types of hazards and frequency of
+occurrences. The number of rows about types of hazards were narrowed
+down to show the top 20 issues occurred in 2022. Using this data, we
+created a bar chart to show the order of hazards by the descending
+number of occurrences. We were able to find that the five most common
+hazards across the world are extreme heat, heavy rainfall, drought,
+urban flooding, and river flooding.</p>
 </div>
-<div id="graph-1" class="section level3">
-<h3>Graph 1:</h3>
+<div id="graph-2-which-groups-have-been-impacted-by-climate-change-most" class="section level4">
+<h4>Graph 2: Which groups have been impacted by climate change
+most?</h4>
+<p><code>{r} INSERT, echo = TRUE, message = TRUE</code> For chart two we
+used the Climate Related Disasters Frequency csv to find out which
+country had the most trouble due to climate change. Using information on
+this csv between 1980 and 2018, we could count the number of disasters
+each country has experienced since then. From there we created a chart
+that compared the overall disasters for the top ten most affected
+countries around the world. Surprisingly, we discovered that the United
+States has experienced the most climate related disasters since the 80s,
+with China and India trailing behind. This chart allowed us to gain a
+better perspective on the effects of climate change and climate related
+disasters around the world.</p>
 </div>
-<div id="graph-2" class="section level3">
-<h3>Graph 2:</h3>
-</div>
-<div id="graph-3" class="section level3">
-<h3>Graph 3:</h3>
-<p>This chart aims to help answer our third research question: “how have
-the governments of the groups most affected by climate change-related
-health issues reacted”. This chart answers this question by plotting
-each nation in the data according to the number of climate-related
-disasters that have impacted the country, and the average percent of
-each nation that is dedicated to environmental protection programs. What
-we can see from the chart is that the fact that a country has
-experienced more climate-related disasters does not seem to have much of
-an impact on the proportion of a nation’s GDP that is dedicated to
-environmental protection programs. This is best shown by how the
-Netherlands has experienced 36 disasters and spends around 3% of its GDP
-on environmental protection, while China has experienced 733 disasters
-and spends around .4% of its GDP on environmental protection.</p>
+<div id="graph-3-how-have-the-governments-of-the-groups-most-affected-by-climate-change-related-health-issues-reacted" class="section level4">
+<h4>Graph 3: How have the governments of the groups most affected by
+climate change-related health issues reacted?</h4>
+<p><code>{r, echo = TRUE, message = TRUE} gpd_chart</code> This chart
+aims to help answer our third research question: “how have the
+governments of the groups most affected by climate change-related health
+issues reacted”. This chart answers this question by plotting each
+nation in the data according to the number of climate-related disasters
+that have impacted the country, and the average percent of each nation
+that is dedicated to environmental protection programs. What we can see
+from the chart is that the fact that a country has experienced more
+climate-related disasters does not seem to have much of an impact on the
+proportion of a nation’s GDP that is dedicated to environmental
+protection programs. This is best shown by how the Netherlands has
+experienced 36 disasters and spends around 3% of its GDP on
+environmental protection, while China has experienced 733 disasters and
+spends around .4% of its GDP on environmental protection.</p>
 </div>
 </div>
 
