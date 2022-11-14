@@ -29,8 +29,12 @@ ggplot(data = Top_ten_countries) +
                y = Top_ten_countries$total,
                color = Country,
                fill = Country)
-  )
-
+  ) +
+  labs(
+    x = "Countries",
+    y = "Disasters"
+  ) +
+  ggtitle("Frequency of Disasters", "Top Ten Countries")
 
 Highest_Percent_Vulnurable <- Cities_climate_hazards %>%
   group_by(Proportion.of.population.exposed.to.hazard) %>%
