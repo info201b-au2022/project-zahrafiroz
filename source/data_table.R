@@ -71,7 +71,7 @@ data_table <- inner_join(disaster_freq_nations, top_hazard, by = "ISO3") %>%
   arrange(-total_disasters) %>%
   head(10) %>%
   rename(
-    Number_of_climate_related_disasters_recorded_in_nation = total_disasters,
-    Main_climate_related_health_issue_in_nation = top_health_issue,
-    Main_climate_related_environmental_hazard_in_nation = top_hazard
+    "Number of climate related disasters recorded in nation" = total_disasters,
+    "Main climate related health issue in nation" = top_health_issue,
+    "Main climate related environmental hazard in nation" = top_hazard
   )
