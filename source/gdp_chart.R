@@ -1,24 +1,28 @@
-library("dplyr")
-library("stringr")
+library("tidyverse")
 library("ggplot2")
 library("plotly")
 
-disaster_freq <- read.csv("../data/Climate-related_Disasters_Frequency.csv", stringsAsFactors = F)
+disaster_freq <- read.csv("../data/Climate-related_Disasters_Frequency.csv",
+  stringsAsFactors = FALSE
+)
 
-gov_expend <- read.csv("../data/Environmental_Protection_Expenditures.csv", stringsAsFactors = F)
+gov_expend <- read.csv("../data/Environmental_Protection_Expenditures.csv",
+  stringsAsFactors = FALSE
+)
 
+# Find the number of climate related disasters that have affected nations.
 disaster_freq_nations <- disaster_freq %>%
   filter(Indicator == "Climate related disasters frequency, Number of Disasters: TOTAL") %>%
   group_by(Country) %>%
-  mutate(total_disasters = sum(across(starts_with("F")), na.rm = T)) %>%
+  mutate(total_disasters = sum(across(starts_with("F")), na.rm = TRUE)) %>%
   select(Country, total_disasters) %>%
   arrange(-total_disasters)
 
-
+# Find the average percent of gdp nations spend on environmental protection.
 avg_gdp_nations <- gov_expend %>%
   filter(Unit == "Percent of GDP") %>%
   group_by(Country) %>%
-  summarise(sum = sum(across(starts_with("F")), na.rm = T)) %>%
+  summarise(sum = sum(across(starts_with("F")), na.rm = TRUE)) %>%
   mutate(avg_gdp = sum / ncol(select(gov_expend, starts_with("F")))) %>%
   select(-sum)
 
@@ -38,12 +42,22 @@ gdp_chart <- plot_ly(
     gdp_and_disasters$Country,
     "<br>", "Disasters: ",
     gdp_and_disasters$total_disasters,
-    "<br>", "Mean GDP Spent: ",
-    round(gdp_and_disasters$avg_gdp, 2)
+    "<br>", "Proportion of nation's GDP Spent on environmental protection: ",
+    round(gdp_and_disasters$avg_gdp, 2),
+    "%"
   )
 ) %>%
   layout(
-    title = "Nation mean percent gdp spent on environmental protection compared to count of disasters impacting nation",
-    xaxis = list(title = "Count of climate-related disasters impacting nation (1980-2018)", ticksuffix = " Disasters"),
-    yaxis = list(title = "Mean percent GDP spent on environmental protection (1995-2021)", ticksuffix = "%")
+    title = "Proportion of nation's GDP spent on environmental protection vs. 
+    count of climate-related disasters occuring in nation",
+    xaxis = list(
+      title = "Count of climate-related disasters occuring in nation 
+    (1980-2018)",
+      ticksuffix = " Disasters"
+    ),
+    yaxis = list(
+      title = "Mean proportion of nation's GDP spent on environmental protection
+    (1995-2021)",
+      ticksuffix = "%"
+    )
   )
