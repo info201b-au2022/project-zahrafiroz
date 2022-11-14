@@ -19,13 +19,19 @@ Our group has come together to present harsh data on the impacts that climate ch
 
 ## Problem Domain
 
-Climate change contributes to a variety of ongoing issues in our economy, ecosystem, and health. Notable topics include increased natural disasters, air pollution, degradation of the environment, and mental health issues. The values we chose to prioritize in this project are human health and environmental impacts.  
-
+### Direct and Indirect Stakeholders:
 The article from Cabral et al (2019) discusses how the increasing sea temperatures from climate change is one of the important factors in biodiversity loss. The text states, “The magnitude of human impacts has been higher in coastal zones compared to offshore areas, with climate change, fishing, and pollution being the most significant pressures”. The article does a good job of noting the consequences of human activities on coastal areas from overfishing to man-made pollution and their expected outcomes. This causes issues of suffocation, organisms being unable to reproduce, harmful algae blooms, and animal habitats being destroyed. Direct stakeholders of climate change's impact on coastal zones are fishermen, water-based organisms, and coastal-based communities. This important topic raises questions on human values, for instance, Is money more valuable than entire ecosystems and species? What is the real cost of human activities in today's world?  
 
 Haines et al (2004) explained that the increase in temperatures means an increase in the occurrence of contracting diseases, noting that the spread of malaria can increase in areas with warmer climates. According to Padhy Et Al (2015), fluctuating climate increases the possibility of droughts and floods, which results in economic hardships for farmers, and can then lead to suicide. An increase in temperature also leads to agricultural and life-sustaining issues such as wildfires and droughts. Notable indirect stakeholders of climate change's increasing temperatures are humans contracting the disease at a higher rate, Agricultural societies and farmers who face loss of crops due to drought and wildfire, and lastly animals who lose habitat and resources because of these conditions.   
 
+### Human Values:
+
+Climate change contributes to a variety of ongoing issues in our economy, ecosystem, and health. Notable topics include increased natural disasters, air pollution, degradation of the environment, and mental health issues. The values we chose to prioritize in this project are human health and environmental impacts.  
+
+### Potential Benefits and Harms:
+
 Our datasets can be of beneficial use to the public offering the facts and effects of climate change, and hopefully resolving any misinformation. On the other hand, there might be consequences such as misusing data to exaggerate negative financial effects, greenwashing could create problems in areas where there were not any, and lastly, it is in human nature to be selfish and this information can cause a false sense of reassurance if certain powerful groups and countries feel that the possibility of these complications happening to them are low.
+
 
 
 ## Research Questions:
@@ -80,6 +86,8 @@ Technologists and designers alongside climate change activists need to work toge
 
 ## Limitations
 The most pressing limitations we will likely encounter in our work and need to address are limitations with how accurate our conclusions can be due to the nature of some of the data and limitations with how much we can extrapolate our findings to reality. With the first limitation, we expect to make reasonably strong conclusions from our data analysis, but there is a major issue of whether or not the data we make that analysis on is complete. We suspect the data might be incomplete and not fully represent reality due to the hard-to-record nature of climate change health impacts, along with the relative imprecision of the data on the group effects of climate change health impacts. Thus, when we finally do our analysis, there is a chance that we will unable to fully capture which effects of climate change on health are predominant, and which groups are most affected by climate-related health issues.
+
+A final limitation we believe we will possibly encounter is a limitation on the breadth/depth of our analysis due to limits on how much time we can dedicate to the project. Limitations based on allotment of time are a common occurrence in many projects and, with our project specifically, we believe that limits on how much time we can allot to the project may affect the depth and breadth of our analyses.
 
 ## References:
 Cabral, H., Fonseca, V., Sousa, T., & Costa Leal, M. (2019, July 31). Synergistic effects of
