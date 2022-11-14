@@ -29,7 +29,7 @@ hazards_count <- data.frame(
 )
 
 #   Graphing
-plot_ly(
+hazards_chart <- plot_ly(
   data = hazards_count,
   labels = ~hazards,
   values = ~number_of_occurrences,
@@ -44,4 +44,4 @@ plot_ly(
 ) %>%
   layout(
     title = "Top 20 Climate Related Hazards in 2022"
-) 
+)
