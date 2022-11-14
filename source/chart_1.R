@@ -25,20 +25,20 @@ hazards_count <- climate_hazards %>%
 
 hazards_count <- data.frame(
   hazards=hazards_count$Climate.related.hazards,
-  number_of_occurences=hazards_count$n
+  number_of_occurrences=hazards_count$n
 )
 
 #   Graphing
 plot_ly(
   data = hazards_count,
-  y = ~reorder(hazards, number_of_occurences),
-  x = ~number_of_occurences,
+  y = ~reorder(hazards, number_of_occurrences),
+  x = ~number_of_occurrences,
   type = "bar",
   hovertext = ""
 ) %>%
   layout(
-    title = "Top 20 Climate Related Hazard Occurences in 2022",
+    title = "Top 20 Climate Related Hazard Occurrences in 2022",
     yaxis = list(title = "Types of Hazards"),
-    xaxis = list(title = "Number of Occurences")
+    xaxis = list(title = "Number of Occurrences")
   ) 
 
