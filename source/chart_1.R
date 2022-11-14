@@ -31,14 +31,17 @@ hazards_count <- data.frame(
 #   Graphing
 plot_ly(
   data = hazards_count,
-  y = ~reorder(hazards, number_of_occurrences),
-  x = ~number_of_occurrences,
-  type = "bar",
-  hovertext = ""
+  labels = ~hazards,
+  values = ~number_of_occurrences,
+  type = "pie",  
+  textposition = "inside",  
+  textinfo = "label+percent",
+  hoverinfo = "label+text",
+  text = ~paste(number_of_occurrences, "Cities Affected"),
+  insidetextfont = list(color = "#FFFFFF"),
+  marker = list(line = list(color = "#FFFFFF", width = 0.7)),
+  showlegend = TRUE
 ) %>%
   layout(
-    title = "Top 20 Climate Related Hazard Occurrences in 2022",
-    yaxis = list(title = "Types of Hazards"),
-    xaxis = list(title = "Number of Occurrences")
-  ) 
-
+    title = "Top 20 Climate Related Hazards in 2022"
+) 
