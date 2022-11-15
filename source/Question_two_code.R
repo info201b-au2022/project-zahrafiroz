@@ -2,12 +2,7 @@ library("dplyr")
 library("ggplot2")
 
 Frequency_of_distasters <- read.csv("https://raw.githubusercontent.com/info201b-au2022/project-zahrafiroz/main/data/Climate-related_Disasters_Frequency.csv")
-View(Frequency_of_distasters)
 Cities_climate_hazards <- read.csv("https://raw.githubusercontent.com/info201b-au2022/project-zahrafiroz/main/data/2022_Cities_Climate_Hazards.csv")
-View(Cities_climate_hazards)
-
-Disaster_Years_Com
-Distaster_Years_Combined <- mutate(Distaster_Years_Combined, "1980" = F1980)
 
 Highest_frequency <- Frequency_of_distasters %>%
   group_by(Country) %>%
@@ -15,7 +10,6 @@ Highest_frequency <- Frequency_of_distasters %>%
   select(Country, total) %>%
   arrange(-total)
 Highest_frequency <- distinct(Highest_frequency)
-  View(Highest_frequency)
 
 Top_ten_countries <- head(Highest_frequency, 10)
 Top_ten_countries
@@ -34,22 +28,6 @@ ggplot(data = Top_ten_countries) +
     y = "Disasters"
   ) +
   ggtitle("Frequency of Disasters", "Top Ten Countries")
-
-Highest_Percent_Vulnurable <- Cities_climate_hazards %>%
-  group_by(Proportion.of.population.exposed.to.hazard) %>%
-  filter(Proportion.of.population.exposed.to.hazard == "90-100%") %>%
-  filter(Current.magnitude.of.impact.of.hazard == "High") %>%
-  filter(Current.probability.of.hazard == "High") %>%
-  filter(Did.this.hazard.significantly.impact.your.jurisdiction.before.this.reporting.year. == "Yes") %>%
-  pull(City, Country)
-View(Highest_Percent_Vulnurable)
-
-Most_Vulnerable <- Highest_Percent_Vulnurable %>%
-  filter(Population == max(Population)) %>%
-  pull(City, Country)
-Most_Vulnerable
-
-# Lagos, Nigeria
 
 
 
