@@ -49,7 +49,7 @@ We used the csv “2022 Cities Climate Hazards” to find what type of climate c
 #### Graph 2: Which groups have been impacted by climate change most?
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
 source("../source/Question_two_code.R")
-plot2
+Top_Ten_Most_Effected
 ```
 
 For chart two we used the Climate Related Disasters Frequency csv to find out which country had the most trouble due to climate change. Using information on this csv between 1980 and 2018, we could count the number of disasters each country has experienced since then. From there we created a chart that compared the overall disasters for the top ten most affected countries around the world. Surprisingly, we discovered that the United States has experienced the most climate related disasters since the 80s, with China and India trailing behind. This chart allowed us to gain a better perspective on the effects of climate change and climate related disasters around the world. 
