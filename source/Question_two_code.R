@@ -13,7 +13,7 @@ Highest_frequency <- distinct(Highest_frequency)
 
 Top_ten_countries <- head(Highest_frequency, 10)
 
-ggplot(data = Top_ten_countries) + 
+Top_Ten_Most_Affected <- ggplot(data = Top_ten_countries) + 
   geom_col(
              mapping = aes( 
                x = reorder(Top_ten_countries$Country,
