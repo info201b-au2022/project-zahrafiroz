@@ -12,7 +12,6 @@ Highest_frequency <- Frequency_of_distasters %>%
 Highest_frequency <- distinct(Highest_frequency)
 
 Top_ten_countries <- head(Highest_frequency, 10)
-Top_ten_countries
 
 ggplot(data = Top_ten_countries) + 
   geom_col(
