@@ -1,5 +1,4 @@
 library("dplyr")
-install.packages("ggplot2")
 library("ggplot2")
 
 Frequency_of_distasters <- read.csv("https://raw.githubusercontent.com/info201b-au2022/project-zahrafiroz/main/data/Climate-related_Disasters_Frequency.csv")
