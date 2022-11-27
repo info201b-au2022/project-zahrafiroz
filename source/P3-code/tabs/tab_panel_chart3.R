@@ -5,6 +5,14 @@ library("plotly")
 library(countrycode)
 library(shiny)
 
+disaster_freq <- read.csv("../../data/Climate-related_Disasters_Frequency.csv",
+                          stringsAsFactors = FALSE
+)
+
+gov_expend <- read.csv("../../data/Environmental_Protection_Expenditures.csv",
+                       stringsAsFactors = FALSE
+)
+
 tab_panel_chart3 <-tabPanel(
     "Chart 3",
     p("This is chart 3."), 
@@ -26,15 +34,9 @@ tab_panel_chart3 <-tabPanel(
     )
 )
 
-------#Actual code, not sure if this is meant to be here
+#Actual code, not sure if this is meant to be here
   
-disaster_freq <- read.csv("../../data/Climate-related_Disasters_Frequency.csv",
-                          stringsAsFactors = FALSE
-)
 
-gov_expend <- read.csv("../../data/Environmental_Protection_Expenditures.csv",
-                       stringsAsFactors = FALSE
-)
 
 # Find the number of climate related disasters that have affected nations.
 disaster_freq_nations <- disaster_freq %>%
@@ -77,3 +79,4 @@ get_gdp_data <- function(input_group) {
     summarize(avg_gdp = mean(avg_gdp, na.rm = TRUE), total_disasters = sum(total_disasters, na.rm = TRUE))
   return(as.data.frame(plot_data))
 }
+
