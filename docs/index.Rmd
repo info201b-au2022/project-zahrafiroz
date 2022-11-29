@@ -6,7 +6,9 @@ output: html_document
 ---
 ```{r setup, include = FALSE}
 library(countrycode)
+library(tidyr)
 library(tidyverse)
+library(dplyr)
 library(ggplot2)
 library(plotly)
 source("../source/summary_info.R")
