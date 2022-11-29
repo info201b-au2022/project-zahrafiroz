@@ -4,10 +4,20 @@ author: "Calvin, Zahra, Ian, Thu"
 date: "2022-11-13"
 output: html_document
 ---
+```{r setup, include = FALSE}
+library(countrycode)
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+source("../source/summary_info.R")
+source("../source/data_table.R")
+source("../source/chart_1.R")
+source("../source/Question_two_code.R")
+source("../source/gdp_chart.R")
+```
 In order to get a deep understanding of the impact climate change has had on the human species we drew five distinct values from our data sets. These five values will point out the most frequent climate related hazard and the most frequent climate related health issue both with a direct affiliation to human health. Then we will note the population most vulnerable to climate related health issues and the population most frequently vulnerable to climate hazards, these values inform us on who is dealing with the harshest outcomes of climate change. And lastly, we draw out the nation with the highest number of climate related disasters to pin point the nation most at risk as shown by data.  
 
 ```{r echo= FALSE, message=FALSE}
-source("../source/summary_info.R")
 one <- summary_info$most_frequent_hazard
 two <- summary_info$most_frequent_health_issue
 three <- summary_info$most_vulnerable_health
@@ -33,14 +43,12 @@ The nation that pulled with the largest number of climate related disasters retu
 
 ## Table: 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE} 
-source("../source/data_table.R")
 knitr::kable(data_table) 
 ```
 This table gathers some of the most important features of the data files we are using in our project. Taking a look at the data table, we can understand how parts of our data are structured, along with several important observations. One observation is that out of the nations listed in the dataset, the United States has experienced the highest number of climate-related disasters at 889 disasters. Another important observation that can be gathered from the table is the main climate-related health issue impacting each nation, for example, the main climate-related health issue impacting the United States is heat-related illnesses. Finally, from the table, we can also gather the main climate-related hazards that are impacting each nation, with the main hazard for the United States being extreme heat.
 
 #### Graph 1: How has human health been impacted by climate change?
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
-source("../source/chart_1.R")
 hazards_chart
 ```
 
@@ -48,7 +56,6 @@ We used the csv “2022 Cities Climate Hazards” to find what type of climate c
 
 #### Graph 2: Which groups have been impacted by climate change most?
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
-source("../source/Question_two_code.R")
 plot2
 ```
 
@@ -56,7 +63,6 @@ For chart two we used the Climate Related Disasters Frequency csv to find out wh
 
 #### Graph 3: How have the governments of the groups most affected by climate change-related health issues reacted?
 ```{r echo = FALSE, message=FALSE, warning=FALSE}
-source("../source/gdp_chart.R")
 gdp_chart
 ```
 This chart aims to help answer our third research question: "how have the governments of the groups most affected by climate change-related health issues reacted”. This chart answers this question by plotting each nation in the data according to the number of climate-related disasters that have impacted the country, and the average percent of each nation that is dedicated to environmental protection programs. What we can see from the chart is that the fact that a country has experienced more climate-related disasters does not seem to have much of an impact on the proportion of a nation’s GDP that is dedicated to environmental protection programs. This is best shown by how the Netherlands has experienced 36 disasters and spends around 3% of its GDP on environmental protection, while China has experienced 733 disasters and spends around .4% of its GDP on environmental protection.
