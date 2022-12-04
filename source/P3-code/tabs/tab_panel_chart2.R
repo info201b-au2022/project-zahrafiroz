@@ -39,14 +39,13 @@ country_tab <- sidebarLayout(
 )
 
 tab_panel_chart2 <-tabPanel(
-    "Chart 2",
-    p("This is chart 2."),
+    "Vulnerable Groups",
+    h1("Groups Most Vulnerable to Climate Change Related Impacts"),
     tabsetPanel(
       tabPanel("Groups Vulnerable in Cities", cities_tab),
       tabPanel("Vulnerable Nations", country_tab)),
-      mainPanel(
-        p("Some text here")
+      p("This is chart 2."),
       )
-    )
+
 
 

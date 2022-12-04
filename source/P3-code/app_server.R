@@ -14,6 +14,14 @@ server <- function(input, output) {
     }
   })
 
+  output$gdp_correlation <- renderText({
+    test <- cor.test(
+      gdp_and_disasters[, input$gdp_chart_options],
+      gdp_and_disasters$avg_gdp
+    )
+    return(round(test$estimate, 3))
+  })
+
   output$gdp_chart <- renderPlotly({
     plot_ly(
       data = gdp_and_disasters,
@@ -34,7 +42,7 @@ server <- function(input, output) {
         }
       )
     ) %>% layout(
-      title = "Disasters vs. Avg. GDP% Spent on Environmental Protection (1980-2021)",
+      title = "Disasters vs. Avg. GDP% Spent on Environmental Protection (1980-2018)",
       xaxis = list(
         title = paste(
           "Count of", str_to_title(input$gdp_chart_options),
@@ -107,15 +115,18 @@ server <- function(input, output) {
         "Climate Related Disaster Count: ", country_data$disaster_sum
       ),
       color = ~Country
-    ) %>%
-      layout(
-        title = paste0("Nations Most Affected by Climate-related Disasters (", input$disaster_countries_years[1], "-", input$disaster_countries_years[2], ")"),
-        yaxis = list(
-          categoryorder = "array",
-          categoryarray = rev(pull(country_data, Country))
-        ),
-        xaxis = list(title = "Climate-related Disaster Count", ticksuffix = "")
-      )
+    ) %>% layout(
+      title = paste0(
+        "Nations Most Affected by Climate-related Disasters (",
+        input$disaster_countries_years[1], "-",
+        input$disaster_countries_years[2], ")"
+      ),
+      yaxis = list(
+        categoryorder = "array",
+        categoryarray = rev(pull(country_data, Country))
+      ),
+      xaxis = list(title = "Climate-related Disaster Count", ticksuffix = "")
+    )
   })
 }
 

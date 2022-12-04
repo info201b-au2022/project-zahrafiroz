@@ -1,0 +1,21 @@
+h1 {
+  color: solid gray;
+  font-family: Arial;
+}
+
+h2 {
+  color: red;
+  font-family: Arial;
+}
+
+hr {
+  height:3px;
+  border-width:0;
+  color:gray;
+  background-color:gray
+}
+
+p {
+  color: black;
+  font-family: arial;
+}
