@@ -2,18 +2,18 @@
 library(shiny)
 library(tidyverse)
 source("./data_wrangling/tab_3_data_wrangling.R")
+source("./data_wrangling/tab_2_data_wrangling.R")
 
 
 server <- function(input, output) {
-
   get_gdp_color <- reactive({
-    if(input$color_gdp == "country") {
+    if (input$color_gdp == "country") {
       list("blue", "cyan", "red", "yellow", "magenta", "green", "orange", "olive")
     } else {
-      ~gdp_and_disasters[, input$color_gdp]
+      ~ gdp_and_disasters[, input$color_gdp]
     }
   })
-  
+
   output$gdp_chart <- renderPlotly({
     plot_ly(
       data = gdp_and_disasters,
@@ -47,6 +47,75 @@ server <- function(input, output) {
         ticksuffix = ""
       )
     )
+  })
+
+  get_vulnerable_data <- reactive({
+    if (input$vulnerable_data == "Climate Hazards") {
+      data <- hazard_groups
+    } else {
+      data <- climate_groups
+    }
+    return(data)
+  })
+
+  output$vulnerable_chart <- renderPlotly({
+    vulnerable_data <- get_vulnerable_data()
+    plot_ly(
+      data = vulnerable_data,
+      type = "treemap",
+      parents = c("", "", "", "", "", "", "", "", "", ""),
+      labels = ~ str_wrap(vulnerable_pop, 10),
+      values = ~n,
+      hoverinfo = "text",
+      hovertext = paste0(
+        vulnerable_data$vulnerable_pop, "<br>",
+        "Reported in ", format(vulnerable_data$n, big.mark = ","), " Cities"
+      ),
+      domain = list(column = 0)
+    ) %>%
+      layout(
+        title = paste0("Ten Most Commonly Reported Groups Vulnerable to ", input$vulnerable_data)
+      )
+  })
+
+  get_disaster_data <- reactive({
+    data <- disaster_freq %>%
+      filter(Indicator == "Climate related disasters frequency, Number of Disasters: TOTAL") %>%
+      group_by(Country) %>%
+      mutate(disaster_sum = sum(across(paste0(
+        "F", input$disaster_countries_years[1]
+      ):paste0(
+        "F", input$disaster_countries_years[2]
+      ), na.rm = TRUE))) %>%
+      select(Country, disaster_sum) %>%
+      arrange(-disaster_sum) %>%
+      head(10) %>%
+      as.data.frame()
+  })
+
+  output$disaster_countries <- renderPlotly({
+    country_data <- get_disaster_data()
+    plot_ly(
+      data = country_data,
+      x = ~disaster_sum,
+      y = ~Country,
+      type = "bar",
+      orientation = "h",
+      hoverinfo = "text",
+      hovertext = paste0(
+        "Country: ", country_data$Country, "<br>",
+        "Climate Related Disaster Count: ", country_data$disaster_sum
+      ),
+      color = ~Country
+    ) %>%
+      layout(
+        title = paste0("Nations Most Affected by Climate-related Disasters (", input$disaster_countries_years[1], "-", input$disaster_countries_years[2], ")"),
+        yaxis = list(
+          categoryorder = "array",
+          categoryarray = rev(pull(country_data, Country))
+        ),
+        xaxis = list(title = "Climate-related Disaster Count", ticksuffix = "")
+      )
   })
 }
 
