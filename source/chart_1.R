@@ -2,6 +2,8 @@
 library("dplyr")
 library("ggplot2")
 library("plotly")
+library("tidyr")
+library("tidyverse")
 
 # Question: How has human health been impacted?
 #
@@ -16,32 +18,78 @@ climate_hazards <- climate_hazards %>%
 
 #   Count of hazards
 hazards_count <- climate_hazards %>%
-  select(Climate.related.hazards) %>%
-  count(Climate.related.hazards) %>%
+  select(Country, Climate.related.hazards) %>%
   na_if("") %>%
   na.omit() %>%
-  arrange(by = -n) %>%
-  top_n(20)
+  mutate(Climate.related.hazards = strsplit(as.character(Climate.related.hazards), ":")) %>%
+  unnest(Climate.related.hazards) %>%
+  mutate(Climate.related.hazards = str_trim(Climate.related.hazards, "left")) %>%
+  na_if("Other, please specify") %>%
+  na.omit("Other, please specify") %>%
+  na_if("Other coastal events") %>%
+  na.omit("Other coastal events") %>%
+  group_by(Country, Climate.related.hazards) %>%
+  count(Climate.related.hazards, sort = TRUE) %>%
+  filter(n > 3) %>%
+  arrange(by = Country, Climate.related.hazards)
 
-hazards_count <- data.frame(
-  hazards = hazards_count$Climate.related.hazards,
-  number_of_occurrences = hazards_count$n
-)
 
-#   Graphing
+#   Graphing hazards
 hazards_chart <- plot_ly(
   data = hazards_count,
-  labels = ~hazards,
-  values = ~number_of_occurrences,
-  type = "pie",
-  textposition = "inside",
-  textinfo = "label+percent",
-  hoverinfo = "label+text",
-  text = ~ paste(number_of_occurrences, "Cities Affected"),
-  insidetextfont = list(color = "#FFFFFF"),
-  marker = list(line = list(color = "#FFFFFF", width = 0.7)),
-  showlegend = TRUE
+  x = ~Country,
+  y = ~n,
+  color = ~Climate.related.hazards,
+  type = "bar",
+  text = ~Country,  
+  hoverinfo = "text",
+  hovertext = ~paste("Hazard:", Climate.related.hazards,
+                "<br> Frequency:", n)
 ) %>%
   layout(
-    title = "Top 20 Climate Related Hazards in 2022"
+    barmode = "stack",
+    title = "Climate Related Hazards in Countries",
+    xaxis = list(title = "Country"),
+    yaxis = list(title = "Frequency of Hazards"),
+    legend = list(title = list(text = "Types of Hazards"))
   )
+
+print(hazards_chart)
+
+
+# Health issues across countries
+climate_health <- read.csv("../data/2021_Cities_Climate_Change_Impacts_on_Health_and_Health_Systems.csv", stringsAsFactors = FALSE)
+
+issues_count <- climate_health %>%
+  rename(health_issue = Identify.the.climate.related.health.issues.faced.by.your.city) %>%
+  select(Country, health_issue) %>%
+  mutate(health_issue = strsplit(as.character(health_issue), ";")) %>%
+  unnest(health_issue) %>%
+  mutate(health_issue = str_trim(health_issue, "left")) %>%
+  filter(health_issue != "Question not applicable") %>%
+  group_by(Country, health_issue) %>%
+  count(health_issue, sort = TRUE) %>%
+  filter(n > 3) %>%
+  arrange(by = Country, -n)
+
+
+# Graphing
+health_chart <- plot_ly(
+  data = issues_count,
+  x = ~Country,
+  y = ~n,
+  color = ~health_issue,
+  type = "bar",
+  text = ~Country,  
+  hoverinfo = "text",
+  hovertext = ~paste("Health Issue:", health_issue,
+                     "<br> Frequency:", n)
+) %>%
+  layout(
+    barmode = "stack",
+    title = "Climate Related Health Issues in Countries",
+    xaxis = list(title = "Country"),
+    yaxis = list(title = "Frequency of Issues")
+  ) 
+
+print(health_chart)
