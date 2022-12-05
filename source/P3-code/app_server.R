@@ -3,6 +3,7 @@ library(shiny)
 library(tidyverse)
 source("./data_wrangling/tab_3_data_wrangling.R")
 source("./data_wrangling/tab_2_data_wrangling.R")
+source("./data_wrangling/tab_1_data_wrangling.R")
 
 
 server <- function(input, output) {
@@ -42,16 +43,17 @@ server <- function(input, output) {
         }
       )
     ) %>% layout(
-      title = "Disasters vs. Avg. GDP% Spent on Environmental Protection (1980-2018)",
+      title = "<b>Disasters vs. Avg. GDP% Spent on Environmental Protection (1980-2018)",
+      legend = list(title = list(text = gdp_chart_legend[[input$color_gdp]])),
       xaxis = list(
         title = paste(
-          "Count of", str_to_title(input$gdp_chart_options),
+          "<b>Count of", str_to_title(input$gdp_chart_options),
           "Disasters Impacting Nation"
         ),
         ticksuffix = ""
       ),
       yaxis = list(
-        title = "Avg GDP% Spent on Environmental Protection",
+        title = "<b>Avg GDP% Spent on Environmental Protection",
         ticksuffix = ""
       )
     )
@@ -82,7 +84,7 @@ server <- function(input, output) {
       domain = list(column = 0)
     ) %>%
       layout(
-        title = paste0("Ten Most Commonly Reported Groups Vulnerable to ", input$vulnerable_data)
+        title = paste0("<b>Ten Most Commonly Reported Groups Vulnerable to ", input$vulnerable_data)
       )
   })
 
@@ -116,17 +118,64 @@ server <- function(input, output) {
       ),
       color = ~Country
     ) %>% layout(
+      
       title = paste0(
-        "Nations Most Affected by Climate-related Disasters (",
+        "<b>Nations Most Affected by Climate-related Disasters (",
         input$disaster_countries_years[1], "-",
         input$disaster_countries_years[2], ")"
       ),
+      legend = list(
+        title = list(text = "<b>Country:")),
       yaxis = list(
         categoryorder = "array",
         categoryarray = rev(pull(country_data, Country))
       ),
-      xaxis = list(title = "Climate-related Disaster Count", ticksuffix = "")
+      xaxis = list(title = "<b>Climate-related Disaster Count", ticksuffix = "")
     )
+  })
+  
+  
+  output$health_impact_chart <- renderPlotly({
+    chart_data <- health_chart_data[[input$health_variable]]
+    plot_ly(
+      data = chart_data,
+      x = ~dummy,
+      y = ~n,
+      type = "bar",
+      color = ~ chart_data[[health_chart_y[[input$health_variable]]]],
+      hoverinfo = "text",
+      hovertext = ~ paste0(
+        health_chart_label[[input$health_variable]],
+        ": ",
+        chart_data[[health_chart_y[[input$health_variable]]]],
+        "<br> Frequency: ",
+        n
+      )
+    ) %>%
+      layout(
+        barmode = "stack",
+        title = paste0(
+          "<b>Top Ten Climate Change-related ",
+          health_chart_label[[input$health_variable]],
+          "s"
+        ),
+        legend = list(
+          title = list(text = paste0(
+            "<b>",
+            health_chart_label[[input$health_variable]],
+            ":"
+          ))
+        ),
+        xaxis = list(title = ""),
+        yaxis = list(
+          title = paste0(
+            "<b>Frequency of ",
+            health_chart_label[[input$health_variable]]
+          ),
+          categoryorder = "array",
+          categoryarray = chart_data[[health_chart_y[[input$health_variable]]]]
+        )
+      )
   })
 }
 

@@ -1,19 +1,24 @@
-# Load packages
-library("dplyr")
-library("ggplot2")
 library("plotly")
-library("tidyr")
 library("tidyverse")
 
-# Loading data
-climate_hazards <- read.csv("./data/2022_Cities_Climate_Hazards.csv")
-climate_health <- read.csv("./data/2021_Cities_Climate_Change_Impacts_on_Health_and_Health_Systems.csv",
-  stringsAsFactors = FALSE
-)
+health_count <- climate_health %>%
+  rename(health_issue = Identify.the.climate.related.health.issues.faced.by.your.city) %>%
+  mutate(health_issue = strsplit(as.character(health_issue), ";")) %>%
+  unnest(health_issue) %>%
+  mutate(health_issue = strsplit(as.character(health_issue), "\\(")) %>%
+  unnest(health_issue) %>%
+  filter(!grepl("e.g. ",health_issue))%>%
+  mutate(health_issue = str_trim(health_issue, "left")) %>%
+  filter(health_issue != "Question not applicable") %>%
+  count(health_issue, sort = TRUE) %>%
+  mutate(dummy = "") %>%
+  arrange(-n) %>% 
+  head(10)
 
-# Climate change hazards
+health_count$health_issue <- factor(issues_count$health_issue, levels = pull(issues_count, health_issue))
+
+
 hazards_count <- climate_hazards %>%
-  select(Country, Climate.related.hazards) %>%
   na_if("") %>%
   na.omit() %>%
   mutate(Climate.related.hazards = strsplit(as.character(Climate.related.hazards), ":")) %>%
@@ -23,22 +28,15 @@ hazards_count <- climate_hazards %>%
   na.omit("Other, please specify") %>%
   na_if("Other coastal events") %>%
   na.omit("Other coastal events") %>%
-  group_by(Country, Climate.related.hazards) %>%
   count(Climate.related.hazards, sort = TRUE) %>%
-  filter(n > 3) %>%
-  arrange(by = Country, Climate.related.hazards)
+  mutate(dummy = "") %>%
+  arrange(-n) %>% 
+  head(10)
 
+hazards_count$Climate.related.hazards <- factor(hazards_count$Climate.related.hazards, levels = pull(hazards_count, Climate.related.hazards))
 
-# Health issues across countries
-issues_count <- climate_health %>%
-  rename(health_issue = Identify.the.climate.related.health.issues.faced.by.your.city) %>%
-  select(Country, health_issue) %>%
-  mutate(health_issue = strsplit(as.character(health_issue), ";")) %>%
-  unnest(health_issue) %>%
-  mutate(health_issue = str_trim(health_issue, "left")) %>%
-  filter(health_issue != "Question not applicable") %>%
-  group_by(Country, health_issue) %>%
-  count(health_issue, sort = TRUE) %>%
-  filter(n > 3) %>%
-  arrange(by = Country, -n)
+health_chart_data <- list("health_count" = health_count, "hazards_count" = hazards_count)
 
+health_chart_y <- list("health_count" = "health_issue", "hazards_count" = "Climate.related.hazards")
+
+health_chart_label <- list("health_count" = "Health Issue", "hazards_count" = "Hazard")

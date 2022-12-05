@@ -19,8 +19,6 @@ tab_choices <- list(
   "Storms" = "Storm", "Landslides" = "Landslide"
 )
 
-
-
 # Find the number of climate related disasters that have affected nations.
 disaster_freq_nations <- disaster_freq %>%
   group_by(ISO3, Indicator) %>%
@@ -64,3 +62,5 @@ gdp_and_disasters$continent <- countrycode(
   origin = "iso3c",
   destination = "continent"
 )
+
+gdp_chart_legend <- list("region" = "<b>Region:", "continent" = "<b>Continent:")
