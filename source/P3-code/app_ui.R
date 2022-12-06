@@ -1,4 +1,3 @@
-
 library(shiny)
 library(shinythemes)
 
@@ -10,26 +9,16 @@ source("tabs/tab_panel_summary.R")
 source("tabs/tab_panel_report.R")
 
 ui <- navbarPage(
-  title = "Project Example",
+  title = "Climate Change-Related Health Impacts",
   position = "fixed-top",
   theme = shinytheme("flatly"),
-
-  # A simple header
-  header = list(
-    header = includeCSS("www/my_styles.css"),
-    tags$style(type = "text/css", "body {padding-top: 70px;}"),
-    hr(),
-    HTML("Climate Change Health Impacts "),
-    hr()
-  ),
+  includeCSS("www/my_styles.css"),
+  tags$style(type = "text/css", "body {padding-top: 75px;}"),
 
   # A simple footer
-  footer = list(
-    tags$style(type = "text/css", "body {padding-top: 70px;}"),
-    hr(),
-    HTML("... Project Footer ... "),
-    hr()
-  ),
+  footer = tags$footer(list(
+    includeHTML("tabs/footer.html")
+  )),
 
   # The project introduction
   tab_panel_intro,
@@ -44,5 +33,4 @@ ui <- navbarPage(
 
   # The project report
   tab_panel_report,
-  
 )

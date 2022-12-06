@@ -1,14 +1,15 @@
 library("tidyverse")
-library("ggplot2")
 library("plotly")
 library(countrycode)
-library(tidymodels)
 
-disaster_freq <- read.csv("./../../data/Climate-related_Disasters_Frequency.csv",
+
+disaster_freq <- read.csv(
+  "./../../data/Climate-related_Disasters_Frequency.csv",
   stringsAsFactors = FALSE
 )
 
-gov_expend <- read.csv("./../../data/Environmental_Protection_Expenditures.csv",
+gov_expend <- read.csv(
+  "./../../data/Environmental_Protection_Expenditures.csv",
   stringsAsFactors = FALSE
 )
 
@@ -25,7 +26,7 @@ disaster_freq_nations <- disaster_freq %>%
   mutate(sum = sum(across(starts_with("F")), na.rm = TRUE)) %>%
   spread(key = Indicator, value = sum) %>%
   group_by(ISO3) %>%
-  summarize(across(starts_with("Climate related"), sum, na.rm = T)) %>%
+  summarize(across(starts_with("Climate related"), sum, na.rm = TRUE)) %>%
   rename_with(~ gsub(".*: ", "", .), starts_with("Climate related")) %>%
   rename("Total" = TOTAL)
 

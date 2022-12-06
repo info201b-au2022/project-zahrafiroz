@@ -1,62 +1,52 @@
-
 library(shiny)
 library(tidyverse)
 source("./data_wrangling/tab_3_data_wrangling.R")
 source("./data_wrangling/tab_2_data_wrangling.R")
 source("./data_wrangling/tab_1_data_wrangling.R")
 
-
 server <- function(input, output) {
-  get_gdp_color <- reactive({
-    if (input$color_gdp == "country") {
-      list("blue", "cyan", "red", "yellow", "magenta", "green", "orange", "olive")
-    } else {
-      ~ gdp_and_disasters[, input$color_gdp]
-    }
-  })
-
-  output$gdp_correlation <- renderText({
-    test <- cor.test(
-      gdp_and_disasters[, input$gdp_chart_options],
-      gdp_and_disasters$avg_gdp
-    )
-    return(round(test$estimate, 3))
-  })
-
-  output$gdp_chart <- renderPlotly({
+  output$health_impact_chart <- renderPlotly({
+    chart_data <- health_chart_data[[input$health_variable]]
     plot_ly(
-      data = gdp_and_disasters,
-      x = ~ gdp_and_disasters[, input$gdp_chart_options],
-      y = ~avg_gdp,
-      type = "scatter",
-      mode = "markers",
-      color = get_gdp_color(),
+      data = chart_data,
+      x = ~dummy,
+      y = ~n,
+      type = "bar",
+      color = ~ chart_data[[health_chart_y_axis[[input$health_variable]]]],
       hoverinfo = "text",
-      hovertext = paste0(
-        "Country: ", gdp_and_disasters$country, "<br>",
-        input$gdp_chart_options, " Disasters: ",
-        gdp_and_disasters[[input$gdp_chart_options]], "<br>",
-        "Avg. GDP% Spent on Environmental Protection: ",
-        round(gdp_and_disasters$avg_gdp, 2), "%", "<br>",
-        if (input$color_gdp != "country") {
-          paste0(str_to_title(input$color_gdp), ": ", gdp_and_disasters[[input$color_gdp]])
-        }
+      hovertext = ~ paste0(
+        health_chart_label[[input$health_variable]],
+        ": ",
+        chart_data[[health_chart_y_axis[[input$health_variable]]]],
+        "<br> Frequency: ",
+        format(n, big.mark = ",")
       )
-    ) %>% layout(
-      title = "<b>Disasters vs. Avg. GDP% Spent on Environmental Protection (1980-2018)",
-      legend = list(title = list(text = gdp_chart_legend[[input$color_gdp]])),
-      xaxis = list(
-        title = paste(
-          "<b>Count of", str_to_title(input$gdp_chart_options),
-          "Disasters Impacting Nation"
+    ) %>%
+      layout(
+        barmode = "stack",
+        title = paste0(
+          "<b>Top Ten Climate Change-related ",
+          health_chart_title[[input$health_variable]]
         ),
-        ticksuffix = ""
-      ),
-      yaxis = list(
-        title = "<b>Avg GDP% Spent on Environmental Protection",
-        ticksuffix = ""
+        legend = list(
+          title = list(text = paste0(
+            "<b>",
+            health_chart_label[[input$health_variable]],
+            ":"
+          ))
+        ),
+        xaxis = list(title = ""),
+        yaxis = list(
+          title = paste0(
+            "<b>Frequency of ",
+            health_chart_label[[input$health_variable]]
+          ),
+          tickformat = ",d",
+          categoryorder = "array",
+          categoryarray =
+            chart_data[[health_chart_y_axis[[input$health_variable]]]]
+        )
       )
-    )
   })
 
   get_vulnerable_data <- reactive({
@@ -84,13 +74,18 @@ server <- function(input, output) {
       domain = list(column = 0)
     ) %>%
       layout(
-        title = paste0("<b>Ten Most Commonly Reported Groups Vulnerable to ", input$vulnerable_data)
+        title = paste0(
+          "<b>Ten Most Commonly Reported Groups Vulnerable to ",
+          vulnerable_chart_title[[input$vulnerable_data]]
+        )
       )
   })
 
   get_disaster_data <- reactive({
     data <- disaster_freq %>%
-      filter(Indicator == "Climate related disasters frequency, Number of Disasters: TOTAL") %>%
+      filter(
+        Indicator == "Climate related disasters frequency, Number of Disasters: TOTAL"
+      ) %>%
       group_by(Country) %>%
       mutate(disaster_sum = sum(across(paste0(
         "F", input$disaster_countries_years[1]
@@ -118,14 +113,14 @@ server <- function(input, output) {
       ),
       color = ~Country
     ) %>% layout(
-      
       title = paste0(
         "<b>Nations Most Affected by Climate-related Disasters (",
         input$disaster_countries_years[1], "-",
         input$disaster_countries_years[2], ")"
       ),
       legend = list(
-        title = list(text = "<b>Country:")),
+        title = list(text = "<b>Country:")
+      ),
       yaxis = list(
         categoryorder = "array",
         categoryarray = rev(pull(country_data, Country))
@@ -133,50 +128,64 @@ server <- function(input, output) {
       xaxis = list(title = "<b>Climate-related Disaster Count", ticksuffix = "")
     )
   })
-  
-  
-  output$health_impact_chart <- renderPlotly({
-    chart_data <- health_chart_data[[input$health_variable]]
+
+  get_gdp_color <- reactive({
+    if (input$color_gdp == "country") {
+      list(
+        "blue",
+        "cyan",
+        "red",
+        "yellow",
+        "magenta",
+        "green",
+        "orange",
+        "olive"
+      )
+    } else {
+      ~ gdp_and_disasters[, input$color_gdp]
+    }
+  })
+
+  output$gdp_chart <- renderPlotly({
     plot_ly(
-      data = chart_data,
-      x = ~dummy,
-      y = ~n,
-      type = "bar",
-      color = ~ chart_data[[health_chart_y[[input$health_variable]]]],
+      data = gdp_and_disasters,
+      x = ~ gdp_and_disasters[, input$gdp_chart_options],
+      y = ~avg_gdp,
+      type = "scatter",
+      mode = "markers",
+      color = get_gdp_color(),
       hoverinfo = "text",
-      hovertext = ~ paste0(
-        health_chart_label[[input$health_variable]],
-        ": ",
-        chart_data[[health_chart_y[[input$health_variable]]]],
-        "<br> Frequency: ",
-        n
+      hovertext = paste0(
+        "Country: ", gdp_and_disasters$country, "<br>",
+        input$gdp_chart_options, " Disasters: ",
+        gdp_and_disasters[[input$gdp_chart_options]], "<br>",
+        "Avg. GDP% Spent on Environmental Protection: ",
+        round(gdp_and_disasters$avg_gdp, 2), "%", "<br>",
+        if (input$color_gdp != "country") {
+          paste0(
+            str_to_title(input$color_gdp),
+            ": ",
+            gdp_and_disasters[[input$color_gdp]]
+          )
+        }
       )
-    ) %>%
-      layout(
-        barmode = "stack",
-        title = paste0(
-          "<b>Top Ten Climate Change-related ",
-          health_chart_label[[input$health_variable]],
-          "s"
+    ) %>% layout(
+      title = paste0(
+        "<b>Disasters vs. Avg. GDP% Spent on Environmental",
+        "<b>Protection (1980-2021)"
+      ),
+      legend = list(title = list(text = gdp_chart_legend[[input$color_gdp]])),
+      xaxis = list(
+        title = paste(
+          "<b>Count of", str_to_title(input$gdp_chart_options),
+          "Disasters Impacting Nation"
         ),
-        legend = list(
-          title = list(text = paste0(
-            "<b>",
-            health_chart_label[[input$health_variable]],
-            ":"
-          ))
-        ),
-        xaxis = list(title = ""),
-        yaxis = list(
-          title = paste0(
-            "<b>Frequency of ",
-            health_chart_label[[input$health_variable]]
-          ),
-          categoryorder = "array",
-          categoryarray = chart_data[[health_chart_y[[input$health_variable]]]]
-        )
+        ticksuffix = ""
+      ),
+      yaxis = list(
+        title = "<b>Avg GDP% Spent on Environmental Protection",
+        ticksuffix = ""
       )
+    )
   })
 }
-
-
