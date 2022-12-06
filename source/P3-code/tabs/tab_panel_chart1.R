@@ -20,11 +20,19 @@ tab_panel_chart1 <-tabPanel(
           outputId = "health_impact_chart"
         )
       )
-    ), h3("Analysis:"), 
-    p("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+    ), 
+  h3("Analysis:"),
+  p("The stacked bar chart above shows the ten most commonly reported climate 
+  change-related health issues, climate change-related health hazards, or the 
+  frequency of climate change-related disasters."),
+  tags$br(), 
+  p("These charts were created to answer our first research question: ", 
+  strong("How has human health been impacted as a result of environmental
+  shifts caused by climate change?"), "The chart helps answer this question by 
+  displaying what health issues, hazards, or disasters brought on or exacerbated
+  by climate change are most frequent. By showing the frequency of climate 
+  change-related health issues, hazards, and disasters, the graph reveals the 
+  main impacts of climate change on human health. After finding the main 
+  impacts, we can then use them as a measure of the ways that human health has 
+  been impacted due to the shifts caused by climate change.")
 )
-
-
-

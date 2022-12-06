@@ -25,7 +25,7 @@ server <- function(input, output) {
       layout(
         barmode = "stack",
         title = paste0(
-          "<b>Top Ten Climate Change-related ",
+          "<b>Top Climate Change-related ",
           health_chart_title[[input$health_variable]]
         ),
         legend = list(
@@ -75,7 +75,7 @@ server <- function(input, output) {
     ) %>%
       layout(
         title = paste0(
-          "<b>Ten Most Commonly Reported Groups Vulnerable to ",
+          "<b>Population Groups Most Reported as Vulnerable to ",
           vulnerable_chart_title[[input$vulnerable_data]]
         )
       )
