@@ -4,7 +4,7 @@ cities_tab <- sidebarLayout(
   sidebarPanel(
     radioButtons(
       inputId = "vulnerable_data",
-      label = "Group",
+      label = "Variable:",
       choices = list(
         "Climate Health Impacts" = "Climate Health Impacts",
         "Climate Hazards" = "Climate Hazards"
@@ -23,7 +23,7 @@ country_tab <- sidebarLayout(
   sidebarPanel(
     sliderInput(
       inputId = "disaster_countries_years",
-      label = "Year Range",
+      label = "Year Range:",
       min = 1980,
       max = 2021,
       value = c(1980, 2021),
@@ -47,6 +47,7 @@ tab_panel_chart2 <- tabPanel(
     tabPanel("Vulnerable Nations", country_tab)
   ),
   h3("Analysis:"),
+  hr(),
   p("The above treemaps display the groups of city populations that were most
     reported to be vulnerable to climate change-related health hazards in 2022 
     or the groups of city populations that were most reported to be vulnerable 

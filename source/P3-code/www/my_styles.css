@@ -37,3 +37,8 @@ footer {
   border-top-width: 100%;
   background-color: #f2f2f2;
 }
+
+img {
+  border: 2px solid gray;
+}
+

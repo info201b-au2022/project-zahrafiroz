@@ -2,17 +2,17 @@ library("plotly")
 library("tidyverse")
 
 disaster_freq <- read.csv(
-  "./../../data/Climate-related_Disasters_Frequency.csv",
+  "data/Climate-related_Disasters_Frequency.csv",
   stringsAsFactors = FALSE
 )
 
 climate_health <- read.csv(
-  "./../../data/2021_Cities_Climate_Change_Impacts_on_Health_and_Health_Systems.csv",
+  "data/2021_Cities_Climate_Change_Impacts_on_Health_and_Health_Systems.csv",
   stringsAsFactors = FALSE
 )
 
 climate_hazards <- read.csv(
-  "./../../data/2022_Cities_Climate_Hazards.csv",
+  "data/2022_Cities_Climate_Hazards.csv",
   stringsAsFactors = FALSE
 )
 

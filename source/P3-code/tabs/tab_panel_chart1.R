@@ -1,14 +1,13 @@
 library(shiny)
 
-
 tab_panel_chart1 <-tabPanel(
   "Health Impacts",
-    h1("Climate Change-related Health Impacts"),
+    h1("The Impacts of Climate Change on Human Health"),
     sidebarLayout(
       sidebarPanel(
         radioButtons(
           inputId = "health_variable",
-          label = "Variable",
+          label = "Variable:",
           choices = list(
             "Health Issues" = "health_count", "Hazards" = "hazards_count",
             "Climate Disasters" = "disaster_count"
@@ -20,8 +19,9 @@ tab_panel_chart1 <-tabPanel(
           outputId = "health_impact_chart"
         )
       )
-    ), 
+    ),
   h3("Analysis:"),
+  hr(),
   p("The stacked bar chart above shows the ten most commonly reported climate 
   change-related health issues, climate change-related health hazards, or the 
   frequency of climate change-related disasters."),

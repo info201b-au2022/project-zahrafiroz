@@ -1,0 +1,14 @@
+name: ClimateChange1-P3
+title: ClimateChange1-P3
+username:
+account: calvinuw
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7830974
+bundleId: 6601713
+url: https://calvinuw.shinyapps.io/ClimateChange1-P3/
+when: 1670372973.06714
+lastSyncTime: 1670372973.06715
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: instructions/p01-proposal-requirements.md|instructions/project-design-brief.pdf|instructions/README.md|LICENSE|README.md

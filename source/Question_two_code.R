@@ -28,5 +28,6 @@ plot2 <- ggplot(data = Top_ten_countries) +
   ) +
   ggtitle("Frequency of Disasters", "Top Ten Countries")
 
+plot2
 
 

@@ -1,6 +1,6 @@
-# tab_panel_intro
-
 library(shiny)
+
+addResourcePath(prefix = 'www', directoryPath = './source/P3-code/www')
 
 tab_panel_intro <-tabPanel(
   "Introduction",
@@ -8,14 +8,18 @@ tab_panel_intro <-tabPanel(
     column(
       6,
       h1("Climate Change-Related Health Impacts"),
-      img(src = "intro_image.jpg", height='488px',width='810px', align = "center"),
-      p("(Photo by ", a("Patricia Zavala", href = "https://unsplash.com/@pattyzc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"),"(2020))"),
+      tags$img(height = "488", width = "98%", src = "www/intro_image.jpg"),
+      em("(Photo by ", a("Patricia Zavala", href = "https://unsplash.com/@pattyzc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"),"- 2020)"),
       tags$br(),
-      p("A report by Calvin Standaert")
+      h3("Authored By: ", style = "display: inline;"),
+      strong("Calvin Standaert, Thu La, Zara Firoz, and Ian Paul")
     ),
     column(
       6,
-      h2("Introduction"),
+      style = "background-color: #e9f2f5; min-height: 100%; position: relative;
+      border-radius: 2px solid gray; margin-left: -15px; width:50%;
+      margin-top: -15px;",
+      h2("Introduction:"),
       p("By most accounts, climate change and its current and projected impacts 
       are one of the top concerns for nations and individuals around the world. 
       As a result of these current and projected impacts, a great deal of 
@@ -44,9 +48,11 @@ tab_panel_intro <-tabPanel(
       tags$br(),
       h2("The Dataset:"),
       p("In order to answer our research questions, we created a dataset on the 
-      health impacts of climate change gathered from two key sources: the 
-      International Monetary Fund (IMF) and the Carbon Disclosure Project (CDP) 
-      with help from the ICLEI – Local Governments for Sustainability."),
+      health impacts of climate change gathered from two key sources: ", a(strong("The 
+      International Monetary Fund (IMF)"), href = "https://climatedata.imf.org/"), " and ", a(strong("The Carbon Disclosure Project (CDP)"), href = "https://data.cdp.net/"), 
+      " with help from ", a(strong("The ICLEI – Local Governments for Sustainability"), href = "https://iclei.org/"), "."),
+      
+      
       tags$br(),
       p("The data we collected from CDP/ICLEI was comprised of tabular datasets 
       gathered from two sets of voluntary response questionnaires sent to city 

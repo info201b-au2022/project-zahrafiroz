@@ -1,8 +1,8 @@
 library(shiny)
 library(tidyverse)
-source("./data_wrangling/tab_3_data_wrangling.R")
-source("./data_wrangling/tab_2_data_wrangling.R")
-source("./data_wrangling/tab_1_data_wrangling.R")
+source("source/P3-code/data_wrangling/tab_3_data_wrangling.R")
+source("source/P3-code/data_wrangling/tab_2_data_wrangling.R")
+source("source/P3-code/data_wrangling/tab_1_data_wrangling.R")
 
 server <- function(input, output) {
   output$health_impact_chart <- renderPlotly({
@@ -82,7 +82,7 @@ server <- function(input, output) {
   })
 
   get_disaster_data <- reactive({
-    data <- disaster_freq %>%
+    disaster_data <- disaster_freq %>%
       filter(
         Indicator == "Climate related disasters frequency, Number of Disasters: TOTAL"
       ) %>%
@@ -96,6 +96,7 @@ server <- function(input, output) {
       arrange(-disaster_sum) %>%
       head(10) %>%
       as.data.frame()
+    return(disaster_data)
   })
 
   output$disaster_countries <- renderPlotly({
@@ -129,23 +130,6 @@ server <- function(input, output) {
     )
   })
 
-  get_gdp_color <- reactive({
-    if (input$color_gdp == "country") {
-      list(
-        "blue",
-        "cyan",
-        "red",
-        "yellow",
-        "magenta",
-        "green",
-        "orange",
-        "olive"
-      )
-    } else {
-      ~ gdp_and_disasters[, input$color_gdp]
-    }
-  })
-
   output$gdp_chart <- renderPlotly({
     plot_ly(
       data = gdp_and_disasters,
@@ -153,7 +137,9 @@ server <- function(input, output) {
       y = ~avg_gdp,
       type = "scatter",
       mode = "markers",
-      color = get_gdp_color(),
+      color = if (input$color_gdp != "country") {
+        ~ gdp_and_disasters[, input$color_gdp]
+      },
       hoverinfo = "text",
       hovertext = paste0(
         "Country: ", gdp_and_disasters$country, "<br>",
@@ -188,4 +174,5 @@ server <- function(input, output) {
       )
     )
   })
+  
 }

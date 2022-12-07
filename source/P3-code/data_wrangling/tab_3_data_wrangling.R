@@ -4,12 +4,12 @@ library(countrycode)
 
 
 disaster_freq <- read.csv(
-  "./../../data/Climate-related_Disasters_Frequency.csv",
+  "data/Climate-related_Disasters_Frequency.csv",
   stringsAsFactors = FALSE
 )
 
 gov_expend <- read.csv(
-  "./../../data/Environmental_Protection_Expenditures.csv",
+  "data/Environmental_Protection_Expenditures.csv",
   stringsAsFactors = FALSE
 )
 

@@ -1,6 +1,6 @@
 # tab_panel_chart3
 library(shiny)
-source("./data_wrangling/tab_3_data_wrangling.R")
+source("source/P3-code/data_wrangling/tab_3_data_wrangling.R")
 
 tab_panel_chart3 <- tabPanel(
   "Governmental Responses",
@@ -9,13 +9,13 @@ tab_panel_chart3 <- tabPanel(
     sidebarPanel(
       selectInput(
         inputId = "gdp_chart_options",
-        label = "Disaster Category",
+        label = "Disaster Category:",
         choices = tab_choices,
         selected = "Total Disasters"
       ),
       radioButtons(
         inputId = "color_gdp",
-        label = "Grouping",
+        label = "Grouping:",
         choices = list(
           "Country" = "country", "Region" = "region",
           "Continent" = "continent"
@@ -30,6 +30,7 @@ tab_panel_chart3 <- tabPanel(
     )
   ),
   h3("Analysis:"),
+  hr(),
   p("The scatterplot chart above shows the average percent of a nation's GDP
   that was spent on environmental protection compared to the frequency of 
   climate-related disasters experienced by that nation from 1980 to 2021. The 

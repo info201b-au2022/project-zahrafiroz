@@ -4,8 +4,10 @@ library(plotly)
 library(shinythemes)
 library(countrycode)
 library(tidyverse)
-source("app_ui.R")
-source("app_server.R")
+library(rsconnect)
+source("source/P3-code/p3_ui.R")
+source("source/P3-code/p3_server.R")
+
 
 # Run the application
 shinyApp(ui = ui, server = server)
