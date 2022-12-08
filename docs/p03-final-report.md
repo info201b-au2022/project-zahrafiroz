@@ -115,7 +115,7 @@ Concerning our second research question on which groups are most affected by the
 <br>
 
 #### **Governmental Response of Most-Affected Groups:**
-![A chart showing the avg. GDP% a nation spent on environmental protection vs. the number of climate disasters that nation experienced from 1980 to 2021](../www/findings3_chart.jpg)
+![A chart showing the avg. GDP% a nation spent on environmental protection vs. the number of climate disasters that nation experienced from 1980 to 2021](../source/P3-code/www/findings3_chart.jpg)
 <br>
 
 Looking at our third and final research question on how the governments of those most affected by climate change have responded, we found that _there does not appear to be a clear connection between the number of climate-related disasters that a nation experienced and the percentage of a nation’s GDP that was spent on environmental protection_. We arrived at this conclusion after creating a scatterplot (shown above) that compared the total number of climate-related disasters that a nation experienced with the average percentage of a nation's GDP spent on environmental protection. What we ultimately found was that the resulting data did not follow any kind of clear pattern. Correlation analysis further revealed that the percent of a GDP spent by a nation and the number of climate-related disasters it experienced were very weakly negatively related (r = -.058). 
