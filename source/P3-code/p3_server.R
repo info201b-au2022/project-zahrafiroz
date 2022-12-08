@@ -130,6 +130,14 @@ server <- function(input, output) {
     )
   })
 
+  output$gdp_correlation <- renderText({
+    test <- cor.test(
+      gdp_and_disasters[, input$gdp_chart_options],
+      gdp_and_disasters$avg_gdp
+    )
+    return(round(test$estimate, 3))
+  })
+
   output$gdp_chart <- renderPlotly({
     plot_ly(
       data = gdp_and_disasters,
@@ -174,5 +182,4 @@ server <- function(input, output) {
       )
     )
   })
-  
 }

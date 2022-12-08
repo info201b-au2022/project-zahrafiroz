@@ -20,6 +20,10 @@ p {
   font-family: Sans-Serif;
 }
 
+body {
+  padding-top: 75px;
+}
+
 HTML {
   color: black;
   font-family: Sans-Serif;

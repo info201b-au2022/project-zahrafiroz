@@ -1,4 +1,3 @@
-#every plugin will need to go in here
 library(shiny)
 library(plotly)
 library(shinythemes)

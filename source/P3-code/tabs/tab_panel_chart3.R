@@ -1,4 +1,3 @@
-# tab_panel_chart3
 library(shiny)
 source("source/P3-code/data_wrangling/tab_3_data_wrangling.R")
 
@@ -21,7 +20,10 @@ tab_panel_chart3 <- tabPanel(
           "Continent" = "continent"
         ),
         selected = NULL
-      )
+      ),
+      h5(strong("Correlation Coefficient: "), textOutput(
+        outputId = "gdp_correlation", inline = TRUE
+      ))
     ),
     mainPanel(
       plotlyOutput(
@@ -39,10 +41,11 @@ tab_panel_chart3 <- tabPanel(
   further group a nation according to the geographic region or continent they 
   belong to."),
   tags$br(),
-  p("This graph was included to answer our third research question:",
+  p(
+    "This graph was included to answer our third research question:",
     strong("How have the governments of those most affected by climate change 
            health risks responded?"),
-  ". Within the chart, the governments of those most affected are identified 
+    ". Within the chart, the governments of those most affected are identified 
   as those that have the largest disaster counts, while the response of those 
   governments is indicated by the percentage of the nation's GDP that is spent
   on environmental protection. In addition, the chart also enables grouping by
@@ -53,4 +56,3 @@ tab_panel_chart3 <- tabPanel(
   greater governmental responses."
   )
 )
-
